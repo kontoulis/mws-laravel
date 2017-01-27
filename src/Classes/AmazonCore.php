@@ -429,7 +429,7 @@ abstract class AmazonCore
             if (!array_key_exists('secretKey', $store[$s])) {
                 $this->log("Secret Key is missing!", 'Warning');
             }
-            if (array_key_exists('authToken', $store[$s])) {
+            if (array_key_exists('authToken', $store[$s]) && !empty($store[$s]['authToken'])) {
                 $this->options['MWSAuthToken'] = $store[$s]['authToken'];
             } else {
                 $this->log("Access authToken is missing!", 'Warning');
