@@ -426,7 +426,7 @@ abstract class AmazonCore
             } else {
                 $this->log("Access Key ID is missing!", 'Warning');
             }
-            if (!array_key_exists('secret_key', $store[$s])) {
+            if (!array_key_exists('secretKey', $store[$s])) {
                 $this->log("Secret Key is missing!", 'Warning');
             }
             if (array_key_exists('authToken', $store[$s])) {
@@ -466,7 +466,7 @@ abstract class AmazonCore
                     'merchantId' => Setting::get('merchantId'),
                     'marketplaceId' => Setting::get('marketplaceId'),
                     'keyId' => Setting::get('keyId'),
-                    'secret_key' => Setting::get('secret_key'),
+                    'secretKey' => Setting::get('secretKey'),
                     'amazonServiceUrl'=> Setting::get('amazonServiceUrl'),
                     'AMAZON_SERVICE_URL'=> Setting::get('amazonServiceUrl'),
                     'authToken'=> Setting::get('authToken'),
@@ -612,8 +612,8 @@ abstract class AmazonCore
 
         $store = Config::get('amazon-mws.store');
 
-        if (array_key_exists($this->storeName, $store) && array_key_exists('secret_key', $store[$this->storeName])) {
-            $secretKey = $store[$this->storeName]['secret_key'];
+        if (array_key_exists($this->storeName, $store) && array_key_exists('secretKey', $store[$this->storeName])) {
+            $secretKey = $store[$this->storeName]['secretKey'];
         } else {
             throw new Exception("Secret Key is missing!");
         }
