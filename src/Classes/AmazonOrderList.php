@@ -61,7 +61,15 @@ class AmazonOrderList extends AmazonOrderCore implements Iterator
         $store = Config::get('amazon-mws.store');
 
         if (isset($store[$s]) && array_key_exists('marketplaceId', $store[$s])) {
-            $this->options['MarketplaceId.Id.1'] = $store[$s]['marketplaceId'];
+            // we can request multiple marketplaces
+            if(is_array($store[$s]['marketplaceId'])){
+                foreach($store[$s]['marketplaceId'] as $key => $marketplace){
+                    $this->options['MarketplaceId.Id.'.($key +1 )] = $marketplace;
+                }
+            }else{
+                $this->options['MarketplaceId.Id.1'] = $store[$s]['marketplaceId'];
+            }
+
         } else {
             $this->log("Marketplace ID is missing", 'Urgent');
         }
