@@ -62,12 +62,14 @@ class AmazonShipment extends AmazonInboundCore
         if (is_array($x)) {
             $this->options['ShipmentId'] = $x['ShipmentId'];
 
+
             //inheriting address
             $this->setAddress($x['ShipToAddress']);
 
             $this->options['InboundShipmentHeader.ShipmentId'] = $x['ShipmentId'];
             $this->options['InboundShipmentHeader.DestinationFulfillmentCenterId'] = $x['DestinationFulfillmentCenterId'];
             $this->options['InboundShipmentHeader.LabelPrepType'] = $x['LabelPrepType'];
+
 
             $this->setItems($x['Items']);
 
@@ -121,7 +123,9 @@ class AmazonShipment extends AmazonInboundCore
         } else {
             $this->options['InboundShipmentHeader.ShipFromAddress.DistrictOrCounty'] = null;
         }
-        $this->options['InboundShipmentHeader.ShipFromAddress.StateOrProvinceCode'] = $a['StateOrProvinceCode'];
+        if (array_key_exists('StateOrProvinceCode', $a)) {
+            $this->options['InboundShipmentHeader.ShipFromAddress.StateOrProvinceCode'] = $a['StateOrProvinceCode'];
+        }
         $this->options['InboundShipmentHeader.ShipFromAddress.CountryCode'] = $a['CountryCode'];
         $this->options['InboundShipmentHeader.ShipFromAddress.PostalCode'] = $a['PostalCode'];
     }
@@ -231,6 +235,15 @@ class AmazonShipment extends AmazonInboundCore
         } else {
             return false;
         }
+    }
+
+    public function setShipmentName($name = ""){
+        if(strlen($name)){
+            $this->options['InboundShipmentHeader.ShipmentName'] = $name;
+        }else{
+            $this->options['InboundShipmentHeader.ShipmentName'] = $this->options['ShipmentId'];
+        }
+
     }
 
     /**
