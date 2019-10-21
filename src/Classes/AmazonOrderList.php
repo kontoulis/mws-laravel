@@ -64,7 +64,7 @@ class AmazonOrderList extends AmazonOrderCore implements Iterator
             // we can request multiple marketplaces
             if(is_array($store[$s]['marketplaceId'])){
                 foreach($store[$s]['marketplaceId'] as $key => $marketplace){
-                    $this->options['MarketplaceId.Id.'.($key +1 )] = $marketplace;
+                    $this->options['MarketplaceId.Id.'.((int)$key +1 )] = $marketplace;
                 }
             }else{
                 $this->options['MarketplaceId.Id.1'] = $store[$s]['marketplaceId'];
